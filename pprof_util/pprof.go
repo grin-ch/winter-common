@@ -1,4 +1,4 @@
-package trace_util
+package pprof_util
 
 import (
 	"fmt"
@@ -7,5 +7,8 @@ import (
 )
 
 func Pprof(port int) error {
+	if port <= 0 {
+		return nil
+	}
 	return http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }

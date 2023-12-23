@@ -18,9 +18,10 @@ var (
 		'O', 'P', 'Q', 'R', 'S', 'T', 'U',
 		'V', 'W', 'X', 'Y', 'Z',
 	}
-	nums = []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	numbers = []byte{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
 
 	easy_read = []byte{
+		'2', '3', '4', '5', '6', '7', '8', '9',
 		'A', 'B', 'C', 'D', 'E', 'F',
 		'G', 'H', 'J', 'K', 'L', 'M',
 		'N', 'P', 'Q', 'R', 'S', 'T',
@@ -28,8 +29,8 @@ var (
 	}
 )
 
-func NumSet() []int {
-	return nums
+func NumberSet() []byte {
+	return numbers
 }
 
 func LowerSet() []byte {
