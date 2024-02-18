@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -8,11 +10,12 @@ import (
 )
 
 const (
-	TokenKey = "Authorization"
+	TokenKey  = "Authorization"
+	ClaimsKey = "Cliams"
 )
 
 type RoleBase struct {
-	Uid      int    `json:"uid"`
+	Uid      int64  `json:"uid"`
 	Avatar   string `json:"avatar"`
 	Nickname string `json:"nickname"`
 	Sex      string `json:"sex,omitempty"`
@@ -59,4 +62,23 @@ func ParseJWT(signed, token string) (*Cliams, error) {
 		return nil, fmt.Errorf("token expired")
 	}
 	return claims, err
+}
+
+func IntoCtx(ctx context.Context, cliams *Cliams) context.Context {
+	data, _ := json.Marshal(cliams)
+	return context.WithValue(ctx, ClaimsKey, string(data))
+}
+
+func FromCtx(ctx context.Context) (*Cliams, error) {
+	val := ctx.Value(ClaimsKey)
+	src, ok := val.(string)
+	if !ok {
+		return nil, fmt.Errorf("invalid token")
+	}
+	c := Cliams{}
+	err := json.Unmarshal([]byte(src), &c)
+	if err != nil {
+		return nil, fmt.Errorf("invalid token")
+	}
+	return &c, nil
 }
