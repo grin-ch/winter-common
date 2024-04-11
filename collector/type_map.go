@@ -43,7 +43,7 @@ func (tm *TypeMap[K, V]) LoadOrStore(key K, value V) (val V, loaded bool) {
 	return actual.(V), true
 }
 
-func (tm *TypeMap[K, V]) Range(f func(key K, value V) bool) {
+func (tm *TypeMap[K, V]) Range(f func(k K, v V) bool) {
 	tm.m.Range(func(key, value any) bool {
 		return f(key.(K), value.(V))
 	})

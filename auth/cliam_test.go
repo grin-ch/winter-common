@@ -10,17 +10,17 @@ import (
 const secret = "mock"
 
 func TestGenerateJWT(t *testing.T) {
-	jwt, err := auth.GenerateJWT(60*60*2, secret, "mock", auth.RoleBase{
-		Uid:    1024,
-		Avatar: "mock/img",
-		Sex:    "mock",
-		Ip:     "127.0.0.1",
-	})
+	jwt, err := auth.GenerateJWT(60*60*2, secret, "mock", auth.MakeRoleBase(
+		"mock",
+		"mock/img",
+		"mock",
+		"127.0.0.1",
+	), "salt")
 	if err != nil {
 		t.Fatal(err)
 
 	}
-	c, err := auth.ParseJWT(secret, jwt)
+	c, err := auth.ParseJwtWithSalt(secret, jwt, "salt")
 	if err != nil {
 		t.Fatal(err)
 	}

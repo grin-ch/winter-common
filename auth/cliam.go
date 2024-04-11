@@ -14,35 +14,40 @@ const (
 	ClaimsKey = "Cliams"
 )
 
-type RoleBase struct {
-	Uid      int64  `json:"uid"`
-	Avatar   string `json:"avatar"`
-	Nickname string `json:"nickname"`
-	Sex      string `json:"sex,omitempty"`
-	Ip       string `json:"ip"`
-}
-
 type Cliams struct {
-	RoleBase
+	roleBase
 	jwt.StandardClaims
+	Salt string `json:"salt"`
 }
 
-func GenerateJWT(expires int, secret, issuer string, rBase RoleBase) (string, error) {
+func GenerateJWT(expires int, secret, issuer string, rBase roleBase, salt string) (string, error) {
 	now := time.Now()
 	expire := now.Add(time.Duration(expires) * time.Second)
 	claims := Cliams{
-		RoleBase: rBase,
+		roleBase: rBase,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expire.Unix(),
 			Issuer:    issuer,
 		},
+		Salt: salt,
 	}
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(secret))
 	return token, err
 }
 
-func ParseJWT(signed, token string) (*Cliams, error) {
+func ParseJwtWithSalt(signed, token string, salt string) (*Cliams, error) {
+	claims, err := ParseJwt(signed, token)
+	if err != nil {
+		return nil, err
+	}
+	if claims.Salt != salt {
+		return nil, fmt.Errorf("invalid token")
+	}
+	return claims, err
+}
+
+func ParseJwt(signed, token string) (*Cliams, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Cliams{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(signed), nil
 	})
