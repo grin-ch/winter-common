@@ -1,6 +1,8 @@
 module github.com/grin-ch/winter-common
 
-go 1.20
+go 1.21
+
+toolchain go1.21.5
 
 require (
 	github.com/afocus/captcha v0.0.0-20191010092841-4bd1f21c8868
@@ -9,12 +11,19 @@ require (
 )
 
 require (
+	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
+	github.com/klauspost/reedsolomon v1.12.0 // indirect
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/templexxx/cpu v0.1.0 // indirect
+	github.com/templexxx/xorsimd v0.4.2 // indirect
+	github.com/tjfoc/gmsm v1.4.1 // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	go.uber.org/atomic v1.11.0 // indirect
-	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/crypto v0.17.0 // indirect
+	golang.org/x/net v0.19.0 // indirect
+	golang.org/x/sys v0.15.0 // indirect
 )
 
 require (
@@ -26,6 +35,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
+	github.com/xtaci/kcp-go/v5 v5.6.8
 	golang.org/x/image v0.8.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 )
