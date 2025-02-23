@@ -11,6 +11,8 @@ require (
 )
 
 require (
+	github.com/dolthub/maphash v0.1.0 // indirect
+	github.com/klauspost/compress v1.17.5 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
 	github.com/klauspost/reedsolomon v1.12.0 // indirect
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
@@ -32,6 +34,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/uuid v1.3.0
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
+	github.com/lxzan/gws v1.8.5
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
