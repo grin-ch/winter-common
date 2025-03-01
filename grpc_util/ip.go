@@ -1,4 +1,4 @@
-package ctx_util
+package grpc_util
 
 import (
 	"context"
@@ -7,8 +7,8 @@ import (
 	"google.golang.org/grpc/peer"
 )
 
-// ClientIp 通过从metadata中获取远程地址信息
-func ClientIp(ctx context.Context) string {
+// CtxIp
+func CtxIp(ctx context.Context) string {
 	pr, ok := peer.FromContext(ctx)
 	if !ok {
 		return ""
