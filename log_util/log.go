@@ -56,6 +56,10 @@ func WithTimeFormat(format string) Option    { return func(o *opt) { o.timeForma
 func WithSuffix(suffix string) Option        { return func(o *opt) { o.suffix = suffix } }
 func WithMaxAge(maxAge time.Duration) Option { return func(o *opt) { o.maxAge = maxAge } }
 
+func InitConfig(conf LogConf) {
+	InitLogger(Options(conf)...)
+}
+
 // 配置日志行为
 func InitLogger(opts ...Option) {
 	o := newOpt(opts...)
@@ -82,13 +86,13 @@ func InitLogger(opts ...Option) {
 func fileLoggerHook(o *opt) logrus.Hook {
 	infoWriter, _ := rotatelogs.New(o.path+"%Y%m%d.info"+o.suffix,
 		rotatelogs.WithMaxAge(o.maxAge),
-		rotatelogs.WithRotationTime(24*time.Hour))
+		rotatelogs.WithRotationTime(rotationTime))
 	warnWriter, _ := rotatelogs.New(o.path+"%Y%m%d.warn"+o.suffix,
 		rotatelogs.WithMaxAge(o.maxAge),
-		rotatelogs.WithRotationTime(24*time.Hour))
+		rotatelogs.WithRotationTime(rotationTime))
 	errWriter, _ := rotatelogs.New(o.path+"%Y%m%d.error"+o.suffix,
 		rotatelogs.WithMaxAge(o.maxAge),
-		rotatelogs.WithRotationTime(24*time.Hour))
+		rotatelogs.WithRotationTime(rotationTime))
 
 	fileFormatter := &logrus.TextFormatter{
 		ForceColors:     false,
