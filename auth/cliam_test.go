@@ -11,10 +11,10 @@ const secret = "mock"
 
 func TestGenerateJWT(t *testing.T) {
 	jwt, err := auth.GenerateJWT(60*60*2, secret, "mock", auth.MakeRoleBase(
-		"mock",
-		"mock/img",
-		"mock",
-		"127.0.0.1",
+		auth.WithGid("mock"),
+		auth.WithAvatar("mock/img"),
+		auth.WithNickname("mock"),
+		auth.WithIp("127.0.0.1"),
 	), "salt")
 	if err != nil {
 		t.Fatal(err)

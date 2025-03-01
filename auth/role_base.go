@@ -1,21 +1,39 @@
 package auth
 
 const DefaultVersion = "1.0.0"
-const UnknownSex = "Unknown"
+const UnknownGender = "Unknown"
 
 type roleBase struct {
-	Version  string `json:"version"`
-	Uid      int64  `json:"uid"`
-	Gid      string `json:"gid"`
-	Avatar   string `json:"avatar"`
-	Nickname string `json:"nickname"`
+	Uid      int64  `json:"uid,omitempty"`
+	Gid      string `json:"gid,omitempty"`
+	Nickname string `json:"nickname,omitempty"`
+	Avatar   string `json:"avatar,omitempty"`
 	Gender   string `json:"gender,omitempty"`
-	Ip       string `json:"ip"`
+	Version  string `json:"version,omitempty"`
+	Ip       string `json:"ip,omitempty"`
 }
 
 func WithUid(uid int64) Option {
 	return func(rb *roleBase) {
 		rb.Uid = uid
+	}
+}
+
+func WithGid(gid string) Option {
+	return func(rb *roleBase) {
+		rb.Gid = gid
+	}
+}
+
+func WithNickname(nickname string) Option {
+	return func(rb *roleBase) {
+		rb.Nickname = nickname
+	}
+}
+
+func WithAvatar(avatar string) Option {
+	return func(rb *roleBase) {
+		rb.Avatar = avatar
 	}
 }
 
@@ -31,16 +49,18 @@ func WithVersion(version string) Option {
 	}
 }
 
+func WithIp(ip string) Option {
+	return func(rb *roleBase) {
+		rb.Ip = ip
+	}
+}
+
 type Option func(*roleBase)
 
-func MakeRoleBase(gid, avatar, nickname, ip string, opts ...Option) roleBase {
+func MakeRoleBase(opts ...Option) roleBase {
 	rb := roleBase{
-		Gid:      gid,
-		Version:  DefaultVersion,
-		Avatar:   avatar,
-		Nickname: nickname,
-		Gender:   UnknownSex,
-		Ip:       ip,
+		Version: DefaultVersion,
+		Gender:  UnknownGender,
 	}
 	for _, fn := range opts {
 		fn(&rb)
